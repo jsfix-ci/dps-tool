@@ -5,13 +5,13 @@ installing packages and showing project info tool
 
 ### printInfo
 
-Show dependences, name and version of your projet
+Show dependences, name and version of your projcet
 
 `npx dps-tool p`
 
 ### install
 
-Installing package and adds dependency to pachage.json
+Install packages and add dependencies to package.json
 
 `npx dps-tool i <package name>`
 
