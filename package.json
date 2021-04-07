@@ -20,6 +20,6 @@
     "commander": "^7.2.0"
   },
   "bin": {
-    "dps-tool": "./dps-tool.js"
+    "dps-tool": "./app.js"
   }
 }
