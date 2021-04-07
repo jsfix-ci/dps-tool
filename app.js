@@ -2,8 +2,12 @@
 
 const commander = require('commander')
 
+//dps-tool version
+let fs = require('fs');
+let version = JSON.parse(fs.readFileSync(__dirname + '/package.json')).version;
+
 commander
-  .version('1.0.0')
+  .version(version)
   .description('installing packages and showing info tool')
 
 commander
@@ -12,6 +16,7 @@ commander
   .description('show name, version and dependences of your project')
   .action(() => {
     let fs = require('fs');
+    //get info from pacjage.json at current directory
     let fileName = process.cwd() + '/package.json';
     let data = JSON.parse(fs.readFileSync(fileName));
 
@@ -23,7 +28,11 @@ commander
     console.log('The project has dependences:');
     let dps = Object.keys(projectDps);
     for(let d of dps) {
-      console.log('    ', d, '@', projectDps[d].slice(1))
+      //Delete symbols from version
+      let version = projectDps[d];
+      if (version.indexOf('^')!==-1) version = version.slice(1);
+      if (version.indexOf('~')!==-1) version = version.slice(1);
+      console.log('    ', d, '@', version);
     } 
   })
 
@@ -33,16 +42,22 @@ commander
   .description('install package and add dependency to your project')
   .action((packageName) => {
     const { exec } = require('child_process');
-    exec('npm install ' + packageName, (error, stdout) => {
+    exec('npm install ' + packageName, (error, stdout, stderror) => {
       if(error) {
         console.log(error)
       }
       if (stdout) {
         console.log(stdout)
       }
+      if (stderror) {
+        console.log(stderror)
+      }
     })  
 
   })
+
+commander
+  .addHelpText('before', `dps-tool@` + version)
 
 commander.parse(process.argv)
 
