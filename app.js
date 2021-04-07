@@ -10,6 +10,13 @@ commander
   .version(version)
   .description('installing packages and showing info tool')
 
+let cutVersion = (str) => {
+  let result = str;
+  if (str.indexOf('^')!==-1) result = str.slice(1);
+  if (str.indexOf('~')!==-1) result = str.slice(1);
+  return result
+}
+
 commander
   .command('printInfo')
   .alias('p')
@@ -29,11 +36,7 @@ commander
       console.log('The project has dependences:');
       let dps = Object.keys(projectDps);
       for(let d of dps) {
-        //Delete symbols from version
-        let version = projectDps[d];
-        if (version.indexOf('^')!==-1) version = version.slice(1);
-        if (version.indexOf('~')!==-1) version = version.slice(1);
-        console.log('    ', d, '@', version);
+        console.log('    ', d, '@', cutVersion(projectDps[d]));
       } 
     }
     catch (e) {
@@ -58,7 +61,6 @@ commander
         console.log(stderror)
       }
     })  
-
   })
 
 commander
