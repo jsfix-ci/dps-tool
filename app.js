@@ -63,6 +63,9 @@ commander
     })  
   })
 
+/* TODO: JSFIX could not patch the breaking change:
+TypeScript declaration for .addHelpText() callback no longer allows result of undefined, now just string 
+Suggested fix: Only breaking if the 2nd argument 'text' of addHelpText() might return undefined: The type of addHelpText() has been changed. To accommodate this return an appropriate string instead. */
 commander
   .addHelpText('before', `dps-tool@` + version)
 
